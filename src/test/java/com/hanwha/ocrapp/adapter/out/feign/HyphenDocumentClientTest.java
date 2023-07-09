@@ -1,9 +1,10 @@
 package com.hanwha.ocrapp.adapter.out.feign;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanwha.ocrapp.adapter.out.feign.dto.request.hyphen.HyphenFamilyDocumentRequest;
-import com.hanwha.ocrapp.adapter.out.feign.dto.request.hyphen.LoginMethod;
-import com.hanwha.ocrapp.adapter.out.feign.dto.request.hyphen.LoginOrganization;
+import com.hanwha.ocrapp.adapter.out.feign.dto.request.hyphen.HyphenResidentsDocumentRequest;
 import com.hanwha.ocrapp.adapter.out.feign.dto.response.hyphen.HyphenFamilyDocumentResponse;
+import com.hanwha.ocrapp.adapter.out.feign.dto.response.hyphen.HyphenResidentsDocumentResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 @Slf4j
 @SpringBootTest
 class HyphenDocumentClientTest {
-    // TODO 사용자 입력으로 받아야 하는 값
+    // TODO 가족관계증명서 사용자 입력으로 받아야 하는 값
     /**
      * MOBILE_NO : 핸드폰 번호
      * NAME : 본인 이름
@@ -59,7 +60,26 @@ class HyphenDocumentClientTest {
 
     @Test
     public void getResidentsDocumentTest() {
+        // make payload
+        HyphenResidentsDocumentRequest payload = HyphenResidentsDocumentRequest.builder()
+                .mobileNo(MOBILE_NO)
+                .name(NAME)
+                .personalNum(RRN1 + RRN2)
+                .sido("서울특별시")
+                .sigg("동작구")
+                .build();
 
+        // Request
+        ResponseEntity<HyphenResidentsDocumentResponse> response = hyphenDocumentClient.getResidentsDocumentData(payload);
+
+        // Validation
+        Assertions.assertThat(response).isNotNull();
+        Assertions.assertThat(response.getBody()).isNotNull();
+        Assertions.assertThat(response.getBody().toString()).contains("최재은");
+        Assertions.assertThat(response.getBody().toString()).contains("990823");
+
+        // Response
+        log.info(response.getBody().toString());
     }
 
 }

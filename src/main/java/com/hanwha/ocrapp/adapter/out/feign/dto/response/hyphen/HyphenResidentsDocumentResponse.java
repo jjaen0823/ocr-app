@@ -1,19 +1,20 @@
 package com.hanwha.ocrapp.adapter.out.feign.dto.response.hyphen;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @ToString
-@JsonIgnoreProperties(ignoreUnknown=true)  // 지정한 field 제외하고 모두 무시
-@JsonInclude(value = JsonInclude.Include.NON_ABSENT)  // null 데이터와 Optional(=absent) 제외
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class HyphenResidentsDocumentResponse {
     @JsonProperty("common")
     private Common common;
@@ -21,45 +22,75 @@ public class HyphenResidentsDocumentResponse {
     private Data data;
 
     @ToString
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
     public static class Common {  // 중요 데이터 X
         private String userTrNo;
         private String hyphenTrNo;
         private String errYn;
         private String errMsg;
-
     }
 
     /**
-     * div 구분
-     * name 이름
-     * birthDay 출생년월일
-     * issueNo 발행번호
-     * regAddr 등록기준지
-     * regNo 주민등록번호
-     * sex 성별
-     * root 본
+     * div
      */
     @ToString
-    @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Data {
-        private String div;
-        private String name;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일")
-        private LocalDate birthDay;
-        private String issueNo;
-        private String regAddr;
-        private String regNo;
-        private String sex;
-        private String root;
-        private List<DetailData> list;
-        private List<DetailData> detailList;
+        @JsonProperty("등본주소변동내역")
+        private List<Objects> addressChangeDetails;
+        @JsonProperty("변동내역")
+        private List<ChangeDetail> changeDetails;
+        @JsonProperty("세대구성_사유")
+        private String genCompositionReason;
+        @JsonProperty("세대구성_일자")
+        private String genCompositionDate;
+        @JsonProperty("세대주_성명")
+        private String householderName;
+        @JsonProperty("주소내역")
+        private List<Address> addressList;
 
         @ToString
-        @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
-        public static class DetailData {
-            private String detail;
+        @Getter
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class ChangeDetail {
+            @JsonProperty("등록상태")
             private String div;
+            @JsonProperty("발생일")
+            private String occurrenceDate;
+            @JsonProperty("번호")
+            private String number;
+            @JsonProperty("변동사유")
+            private String changeReason;
+            @JsonProperty("성명")
+            private String name;
+            @JsonProperty("세대주관계")
+            private String householderRel;
+            @JsonProperty("신고일")
+            private String declarationDate;
+            @JsonProperty("주민등록번호")
+            private String personalNum;
+        }
+        @ToString
+        @Getter
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class Address {
+            @JsonProperty("구분")
+            private String div;
+            @JsonProperty("발생일")
+            private String occurrenceDate;
+            @JsonProperty("변동사유")
+            private String changeReason;
+            @JsonProperty("신고일")
+            private String declarationDate;
+            @JsonProperty("주소")
+            private String address;
         }
     }
 }

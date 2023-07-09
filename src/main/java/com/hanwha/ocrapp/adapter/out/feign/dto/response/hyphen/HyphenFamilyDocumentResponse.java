@@ -14,7 +14,6 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 public class HyphenFamilyDocumentResponse {
     @JsonProperty("common")
     private Common common;
@@ -27,13 +26,9 @@ public class HyphenFamilyDocumentResponse {
     @NoArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
     public static class Common {  // 중요 데이터 X
-        @JsonProperty("userTrNo")
         private String userTrNo;
-        @JsonProperty("hyphenTrNo")
         private String hyphenTrNo;
-        @JsonProperty("errYn")
         private String errYn;
-        @JsonProperty("errMsg")
         private String errMsg;
     }
 
