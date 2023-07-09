@@ -1,8 +1,8 @@
 package com.hanwha.ocrapp.adapter.out.feign;
 
 import com.hanwha.ocrapp.adapter.out.feign.configuration.FeignSupportConfig;
-import com.hanwha.ocrapp.adapter.out.feign.dto.request.naver.NaverOCRRequest;
 import com.hanwha.ocrapp.adapter.out.feign.configuration.NaverOCRErrorDecoder;
+import com.hanwha.ocrapp.adapter.out.feign.dto.request.naver.NaverOCRRequest;
 import com.hanwha.ocrapp.adapter.out.feign.dto.response.naver.NaverOCRIDCardResponse;
 import com.hanwha.ocrapp.adapter.out.feign.dto.response.naver.NaverOCRIDCardResponseSimple;
 import feign.RequestInterceptor;
@@ -12,7 +12,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +24,7 @@ import static com.hanwha.ocrapp.adapter.out.feign.constants.FeignConstants.NAVER
 @FeignClient(
     value = NAVER_OCR,
     url = "${ocr.naver.url}",
-    configuration = { FeignSupportConfig.class }
+    configuration = { FeignSupportConfig.class, NaverOCRClient.NaverOCRClientConfiguration.class }
 )
 public interface NaverOCRClient {
 
@@ -67,12 +66,12 @@ public interface NaverOCRClient {
         @Value("${ocr.naver.key}")
         String SECRET_KEY;
         @Bean
-        private ErrorDecoder errorDecoder() {
+        ErrorDecoder errorDecoder() {
             return new NaverOCRErrorDecoder();
         }
 
         @Bean
-        private RequestInterceptor requestInterceptor() {
+        RequestInterceptor requestInterceptor() {
             return requestTemplate -> {
                 requestTemplate.header("x-ocr-secret", SECRET_KEY);
             };

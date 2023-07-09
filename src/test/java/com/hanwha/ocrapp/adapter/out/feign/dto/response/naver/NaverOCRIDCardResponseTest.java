@@ -2,18 +2,20 @@ package com.hanwha.ocrapp.adapter.out.feign.dto.response.naver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+@Slf4j
 @SpringBootTest
+@RequiredArgsConstructor
 class NaverOCRIDCardResponseTest {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Test
     void printConvertedJsonStrTest() throws JsonProcessingException {
@@ -34,7 +36,7 @@ class NaverOCRIDCardResponseTest {
                         )),
                         "", 0L, "V2"
                 ));
-        System.out.println(jsonStr);
+        log.info(jsonStr);
 
         Assertions.assertThat(jsonStr)
                 .contains("idCard")

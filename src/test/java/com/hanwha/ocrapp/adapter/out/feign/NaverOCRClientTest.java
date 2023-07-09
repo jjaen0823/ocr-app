@@ -1,12 +1,13 @@
 package com.hanwha.ocrapp.adapter.out.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanwha.ocrapp.adapter.out.feign.dto.request.naver.NaverOCRRequest;
 import com.hanwha.ocrapp.adapter.out.feign.dto.request.naver.NaverOCRImage;
 import com.hanwha.ocrapp.adapter.out.feign.dto.request.naver.NaverOCRImageFormat;
 import com.hanwha.ocrapp.adapter.out.feign.dto.request.naver.NaverOCRMultipartFormImage;
+import com.hanwha.ocrapp.adapter.out.feign.dto.request.naver.NaverOCRRequest;
 import com.hanwha.ocrapp.adapter.out.feign.dto.response.naver.NaverOCRIDCardResponse;
 import com.hanwha.ocrapp.adapter.out.feign.dto.response.naver.NaverOCRIDCardResponseSimple;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -24,9 +25,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@Slf4j
 @SpringBootTest
 class NaverOCRClientTest {
     private static final String FILE_NAME = "test.png";
+
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -69,7 +72,7 @@ class NaverOCRClientTest {
         Assertions.assertThat(response.getStatusCode().value()).isEqualTo(200);
 
         // Response
-        System.out.println(response.getBody().toString());
+        log.info(response.getBody().toString());
     }
 
     @DisplayName("Naver OCR API ID card Request Test - NaverOCRIDCardResponse")
@@ -95,8 +98,8 @@ class NaverOCRClientTest {
         Assertions.assertThat(response.getBody().getImages().toString()).contains("990823");
 
         // Response
-        System.out.println(response.getBody().toString());
-        System.out.println("=========================================");
-        System.out.println(response.getBody().getImages().toString());
+        log.info(response.getBody().toString());
+        log.info("=========================================");
+        log.info(response.getBody().getImages().toString());
     }
 }

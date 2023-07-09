@@ -11,7 +11,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,7 +20,7 @@ import static com.hanwha.ocrapp.adapter.out.feign.constants.FeignConstants.HYPHE
 @FeignClient(
         value = HYPHEN_DOCUMENT,
         url = "${ocr.hyphen.url}",
-        configuration = { FeignSupportConfig.class }
+        configuration = { FeignSupportConfig.class, HyphenDocumentClient.HyphenFamilyDocumentConfiguration.class }
 )
 public interface HyphenDocumentClient {
 
@@ -45,12 +44,12 @@ public interface HyphenDocumentClient {
         @Value("${ocr.hyphen.key}")
         String SECRET_KEY;
 //        @Bean
-//        private ErrorDecoder errorDecoder() {
+//        ErrorDecoder errorDecoder() {
 //            return new HyphenFamilyDocumentErrorDecoder();
 //        }
 
         @Bean
-        private RequestInterceptor requestInterceptor() {
+        RequestInterceptor requestInterceptor() {
             return requestTemplate -> {
                 requestTemplate.header("user-id", USER_ID);
                 requestTemplate.header("Hkey", SECRET_KEY);

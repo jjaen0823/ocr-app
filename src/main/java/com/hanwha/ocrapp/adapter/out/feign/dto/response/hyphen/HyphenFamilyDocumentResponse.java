@@ -1,16 +1,20 @@
 package com.hanwha.ocrapp.adapter.out.feign.dto.response.hyphen;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @ToString
-@JsonIgnoreProperties(ignoreUnknown=true)  // 지정한 field 제외하고 모두 무시
-@JsonInclude(value = JsonInclude.Include.NON_ABSENT)  // null 데이터와 Optional(=absent) 제외
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
 public class HyphenFamilyDocumentResponse {
     @JsonProperty("common")
     private Common common;
@@ -18,13 +22,19 @@ public class HyphenFamilyDocumentResponse {
     private Data data;
 
     @ToString
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
     public static class Common {  // 중요 데이터 X
+        @JsonProperty("userTrNo")
         private String userTrNo;
+        @JsonProperty("hyphenTrNo")
         private String hyphenTrNo;
+        @JsonProperty("errYn")
         private String errYn;
+        @JsonProperty("errMsg")
         private String errMsg;
-
     }
 
     /**
@@ -38,12 +48,15 @@ public class HyphenFamilyDocumentResponse {
      * root 본
      */
     @ToString
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
     public static class Data {
         private String div;
         private String name;
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일")
-        private LocalDate birthDay;
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일")
+        private String birthDay;
         private String issueNo;
         private String regAddr;
         private String regNo;
@@ -53,6 +66,9 @@ public class HyphenFamilyDocumentResponse {
         private List<DetailData> detailList;
 
         @ToString
+        @Getter
+        @AllArgsConstructor
+        @NoArgsConstructor
         @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
         public static class DetailData {
             private String detail;
