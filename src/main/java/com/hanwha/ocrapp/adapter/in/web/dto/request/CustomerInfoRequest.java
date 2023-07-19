@@ -13,4 +13,5 @@ public class CustomerInfoRequest {
     private String customerPersonalNum;
     @NotBlank(message = "고객 주소을 확인해 주세요.")
     private String customerAddress;
+    private String customerPhoneNum;
 }
