@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -61,7 +62,7 @@ class NaverOCRClientTest {
         MultipartFile multipartFile = fileToMultipartfile(file);
 
         // Make image data
-        String valueAsString = objectMapper.writeValueAsString(getImageData("hanwhalife_image1", NaverOCRImageFormat.PNG));
+        String valueAsString = objectMapper.writeValueAsString(getImageData(file.getName(), NaverOCRImageFormat.png));
 
         // Request
         ResponseEntity<NaverOCRIDCardResponseSimple> response = naverOCRClient.getIDCardDataUsingMultipartFormSimple(multipartFile, valueAsString);
@@ -87,7 +88,7 @@ class NaverOCRClientTest {
 
         // Make image data
         // json string 으로 안 바꾸면 message null 에러 발생
-        String valueAsString = objectMapper.writeValueAsString(getImageData("hanwhalife_image2", NaverOCRImageFormat.PNG));
+        String valueAsString = objectMapper.writeValueAsString(getImageData("hanwhalife_image2", NaverOCRImageFormat.png));
 
         // Request
         ResponseEntity<NaverOCRIDCardResponse> response = naverOCRClient.getIDCardDataUsingMultipartForm(multipartFile, valueAsString);
@@ -101,5 +102,19 @@ class NaverOCRClientTest {
         log.info(response.getBody().toString());
         log.info("=========================================");
         log.info(response.getBody().getImages().toString());
+    }
+
+    @Test
+    public void test() throws IOException {
+        // Get file
+        File file = getIDCardFile(FILE_NAME);
+        Assertions.assertThat(file.exists()).isTrue();
+
+        // File to MultipartFile
+        MultipartFile multipartFile = fileToMultipartfile(file);
+        String filenameExtension = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
+        NaverOCRImageFormat naverOCRImageFormat = NaverOCRImageFormat.valueOf("Ss");
+        log.info(String.valueOf(filenameExtension));
+        log.info(String.valueOf(naverOCRImageFormat));
     }
 }

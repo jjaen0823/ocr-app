@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class HyphenFamilyDocumentResponse {
+public class HyphenFamilyDocumentBasicResponse {
     @JsonProperty("common")
     private Common common;
     @JsonProperty("data")
@@ -50,30 +50,24 @@ public class HyphenFamilyDocumentResponse {
     public static class Data {
         private String div;
         private String name;
-        //        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일")
+//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy년 MM월 dd일")
         private String birthDay;
         private String issueNo;
         private String regAddr;
         private String regNo;
         private String sex;
         private String root;
-        private List<FamilyData> list;
+        private List<DetailData> list;
+        private List<DetailData> detailList;
 
         @ToString
         @Getter
         @AllArgsConstructor
         @NoArgsConstructor
         @JsonNaming(value = PropertyNamingStrategies.LowerCamelCaseStrategy.class)
-        public static class FamilyData {
+        public static class DetailData {
+            private String detail;
             private String div;
-            private String name;
-            private String birthDay;
-            private String regNo;
-            private String sex;
-            private String root;
-            private String makeDt;
-            private String makeReason;
         }
     }
-
 }

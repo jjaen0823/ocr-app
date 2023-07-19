@@ -65,10 +65,11 @@ public interface NaverOCRClient {
     class NaverOCRClientConfiguration {
         @Value("${ocr.naver.key}")
         String SECRET_KEY;
-        @Bean
-        ErrorDecoder errorDecoder() {
-            return new NaverOCRErrorDecoder();
-        }
+
+//        @Bean
+//        ErrorDecoder errorDecoder() {
+//            return new NaverOCRErrorDecoder();
+//        }
 
         @Bean
         RequestInterceptor requestInterceptor() {

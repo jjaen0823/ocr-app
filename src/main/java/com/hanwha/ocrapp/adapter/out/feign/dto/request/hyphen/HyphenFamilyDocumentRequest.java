@@ -47,8 +47,8 @@ public class HyphenFamilyDocumentRequest {
         this.req_name = name;
         this.req_rrn1 = rrn1;
         this.req_rrn2 = rrn2;
-        this.certCerFg = "4";
-        this.rrnPaYn = "3";
+        this.certCerFg = "6";
+        this.rrnPaYn = "2";
         this.issrsnCd = "02";
     }
 }

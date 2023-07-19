@@ -20,6 +20,10 @@ public class HyphenResidentsDocumentRequest {
     private String name;
     @JsonProperty("bizNo")
     private String personalNum;
+    @JsonProperty("req1Opt6")
+    private String req1Opt6;  // 교부대상자외 세대주와 다른 세대원들의 이름
+    @JsonProperty("req1Opt7")
+    private String req1Opt7;  // 주민등록번호 뒷자리
 
     @Builder
     public HyphenResidentsDocumentRequest(String mobileNo, String sido, String sigg, String name, String personalNum) {
@@ -31,5 +35,7 @@ public class HyphenResidentsDocumentRequest {
         this.cusGb = "01";  // 신청자 구분
         this.name = name;
         this.personalNum = personalNum;
+        this.req1Opt6 = "01";  // 포함
+        this.req1Opt7 = "01";  // 포함
     }
 }
