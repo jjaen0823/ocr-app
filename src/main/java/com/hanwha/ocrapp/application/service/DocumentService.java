@@ -49,6 +49,8 @@ public class DocumentService implements DocumentUseCase {
                     .collect(Collectors.toList());
 
             log.info("가족관계증명서 인증 성공");
+            log.info(String.format("response status code: %s", response.getStatusCode()));
+            log.info(String.format("response body: %s", response.getBody()));
             return FamiliesInfoResponse.builder()
                     .familyInfo(familyInfoList)
                     .build();
